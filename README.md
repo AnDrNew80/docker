@@ -87,7 +87,7 @@ Opcja -d uruchamia kontenery w trybie odłączonym (w tle).
 Po pomyślnym uruchomieniu kontenerów możesz uzyskać dostęp do interfejsów webowych:
 ```
 Prometheus UI: Otwórz przeglądarkę i przejdź do:
-http://localhost:9090 (lub http://<IP_Twojej_Maszyny_Debian>:9090)
+http://localhost:9090 (lub http://<IP_Twojej_Maszyny>:9090)
 ```
 Przejdź do zakładki Status -> Targets, aby upewnić się, że node_exporter (dla hosta) i prometheus są w stanie UP.
 
@@ -99,7 +99,7 @@ http://localhost:3000 (lub http://<IP_Twojej_Maszyny_Debian>:3000)
 Dostęp anonimowy jest włączony domyślnie. Prometheus powinien być już automatycznie skonfigurowany jako źródło danych.
 Aby wizualizować metryki, możesz importować gotowe dashboardy z Grafana Labs Dashboards. Popularne ID dla Node Exportera to np. 1860 lub 11074.
 💻 Konfiguracja Monitoringu Windows (Opcjonalnie)
-Aby rozszerzyć monitoring o maszynę Windows (np. z adresem IP 192.168.0.103), na której działa windows_exporter (domyślnie na porcie 9182):
+Aby rozszerzyć monitoring o maszynę np. Windows, na której działa windows_exporter (domyślnie na porcie 9182):
 
 Upewnij się, że windows_exporter jest poprawnie zainstalowany i uruchomiony na maszynie Windows oraz że port 9182 jest otwarty w firewallu tej maszyny.
 
@@ -114,7 +114,7 @@ scrape_configs:
 
   - job_name: 'windows_server' # Nazwa joba - dowolna, ale opisowa
     static_configs:
-      - targets: ['192.168.0.103:9182'] # Zastąp IP adresem swojej maszyny Windows
+      - targets: ['ip.xxx.x.xxx:9182'] # Zastąp IP adresem swojej maszyny Windows
 Zapisz plik prometheus/prometheus.yml.
 
 Zrestartuj tylko kontener Prometheusa, aby wczytał nową konfigurację:
