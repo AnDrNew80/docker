@@ -18,4 +18,4 @@ scrape_configs:
 # --- Dodaj ten blok dla Windows Exportera ---
   - job_name: 'windows_server' # Nazwa joba - dowolna, ale opisowa
     static_configs:
-      - targets: ['192.168.0.103:9182'] # Adres IP Twojej maszyny Windows i port 9182
+      - targets: ['IPpodaj:9182'] # Adres IP Twojej maszyny Windows i port 9182
