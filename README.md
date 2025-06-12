@@ -39,7 +39,6 @@ monitoring-docker/
 └── prometheus/
 └── prometheus.yml              # Plik konfiguracyjny Prometheusa z celami monitoringu
 
-
 ---
 
 ## ✔️ Wymagania Wstępne
