@@ -28,7 +28,7 @@ Dzięki konteneryzacji, cały stos monitoringu jest **łatwy do wdrożenia, prze
 ## 📂 Struktura Katalogów
 
 Projekt jest zorganizowany w przejrzysty sposób, co ułatwia zarządzanie konfiguracją:
-
+```
 monitoring-docker/
 ├── docker-compose.yml              # Główny plik Docker Compose definiujący wszystkie usługi
 ├── grafana/
@@ -38,7 +38,7 @@ monitoring-docker/
 │           └── datasource.yml      # Definicja źródła danych Prometheus dla Grafany
 └── prometheus/
 └── prometheus.yml              # Plik konfiguracyjny Prometheusa z celami monitoringu
-
+```
 ---
 
 ## ✔️ Wymagania Wstępne
