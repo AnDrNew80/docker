@@ -1,0 +1,64 @@
+version: '3.8' # Używamy nowszej wersji składni Docker Compose
+
+services:
+  prometheus:
+    image: prom/prometheus:latest # Obraz Prometheusa
+    container_name: prometheus-server
+    ports:
+      - "9090:9090" # Mapowanie portu hosta:portu kontenera
+    volumes:
+      - ./prometheus:/etc/prometheus # Montuje Twój lokalny katalog 'prometheus' do kontenera
+      - prometheus_data:/prometheus # Wolumin do przechowywania danych Prometheusa
+    command: --config.file=/etc/prometheus/prometheus.yml --web.enable-remote-write-receiver
+    # Zależność: uruchom po node_exporter, ale Prometheus i tak będzie czekał na dostępność
+    depends_on:
+      - node_exporter # Prometheus potrzebuje Node Exportera do scrape'owania
+    networks:
+      - monitoring_network
+
+  grafana:
+    image: grafana/grafana:latest # Obraz Grafany
+    container_name: grafana-dashboard
+    ports:
+      - "3000:3000" # Domyślny port Grafany
+    volumes:
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini # Montuje Twój plik grafana.ini
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources # Montuje konfigurację źródeł danych
+      - grafana_data:/var/lib/grafana # Wolumin do przechowywania danych Grafany (np. dashboardy, użytkownicy)
+    environment:
+      # Ustawienia środowiskowe Grafany
+      - GF_PATHS_CONFIG=/etc/grafana/grafana.ini # Ścieżka do Twojego grafana.ini
+      - GF_SERVER_HTTP_PORT=3000
+      - GF_AUTH_ANONYMOUS_ENABLED=true # Użyj anonimowego dostępu
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+      - GF_USERS_ALLOW_SIGN_UP=false
+    depends_on:
+      - prometheus # Grafana zależy od Prometheusa
+    networks:
+      - monitoring_network
+
+  node_exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter-host
+    ports:
+      - "9100:9100"
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/host/root'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|dev|proc|host|etc)($$|/)'
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/host/root:ro,rslave
+    networks:
+      - monitoring_network
+    restart: unless-stopped
+    privileged: true
+volumes:
+  prometheus_data: # Definicja woluminu dla danych Prometheusa
+  grafana_data:    # Definicja woluminu dla danych Grafany
+
+networks:
+  monitoring_network: # Definicja sieci dla kontenerów
+    driver: bridge
