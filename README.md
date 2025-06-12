@@ -37,7 +37,7 @@ monitoring-docker/
 │       └── datasources/
 │           └── datasource.yml      # Definicja źródła danych Prometheus dla Grafany
 └── prometheus/
-└── prometheus.yml              # Plik konfiguracyjny Prometheusa z celami monitoringu
+	└── prometheus.yml              # Plik konfiguracyjny Prometheusa z celami monitoringu
 ```
 ---
 
