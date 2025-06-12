@@ -118,28 +118,32 @@ scrape_configs:
 Zapisz plik prometheus/prometheus.yml.
 
 Zrestartuj tylko kontener Prometheusa, aby wczytał nową konfigurację:
-
+```
 Bash
 
 docker compose restart prometheus
+```
 Zweryfikuj w Prometheus UI (http://localhost:9090 -> Status -> Targets), czy nowy cel windows_server ma status UP.
 
 W Grafanie możesz zaimportować dedykowane dashboardy dla Windows Exportera (np. ID 14603 lub 16262 z Grafana Labs), aby wizualizować te dane.
 
 🧹 Zatrzymywanie i Czyszczenie
 Zatrzymanie usług (zachowując dane woluminów):
-
+```
 Bash
 
 docker compose stop
+```
 Zatrzymanie i usunięcie kontenerów (zachowując dane woluminów):
-
+```
 Bash
 
 docker compose down
+```
 Zatrzymanie i usunięcie kontenerów, sieci ORAZ wszystkich danych woluminów (czyszczenie środowiska):
-
+```
 Bash
 
 docker compose down --volumes --remove-orphans
+```
 ⚠️ Użyj tej opcji ostrożnie! Spowoduje to usunięcie wszystkich zebranych metryk Prometheusa oraz wszystkich danych Grafany (dashboardów, użytkowników itp.), które nie są zdefiniowane jako bind mounts w plikach konfiguracyjnych.
