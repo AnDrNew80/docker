@@ -58,6 +58,8 @@ sudo systemctl stop prometheus && sudo systemctl disable prometheus
 sudo systemctl stop grafana-server && sudo systemctl disable grafana-server
 sudo systemctl stop node_exporter && sudo systemctl disable node_exporter
 sudo systemctl daemon-reload # Odświeżenie konfiguracji systemd po zmianach
+```
+
 Jeśli po tych krokach porty (np. 9090, 3000, 9100) nadal są zajęte, użyj sudo lsof -i :<PORT> (np. sudo lsof -i :9100) lub sudo ss -tuln | grep <PORT> aby zidentyfikować i zabić proces (sudo kill -9 <PID>). W skrajnych przypadkach rozważ restart maszyny wirtualnej.
 
 🚀 Uruchamianie Projektu
@@ -70,24 +72,29 @@ Upewnij się, że wszystkie pliki konfiguracyjne (prometheus.yml, grafana.ini, d
 Przejdź do głównego katalogu projektu monitoring-docker w swoim terminalu:
 
 Bash
-
+```
 cd /path/to/your/monitoring-docker # Zastąp ścieżką do Twojego katalogu
+```
 Uruchom wszystkie usługi za pomocą Docker Compose:
-
+```
 Bash
 
 docker compose up -d
+```
 Opcja -d uruchamia kontenery w trybie odłączonym (w tle).
 
 🌐 Dostęp do Interfejsów
 Po pomyślnym uruchomieniu kontenerów możesz uzyskać dostęp do interfejsów webowych:
-
+```
 Prometheus UI: Otwórz przeglądarkę i przejdź do:
 http://localhost:9090 (lub http://<IP_Twojej_Maszyny_Debian>:9090)
-
+```
 Przejdź do zakładki Status -> Targets, aby upewnić się, że node_exporter (dla hosta) i prometheus są w stanie UP.
+
+```
 Grafana Dashboard: Otwórz przeglądarkę i przejdź do:
 http://localhost:3000 (lub http://<IP_Twojej_Maszyny_Debian>:3000)
+```
 
 Dostęp anonimowy jest włączony domyślnie. Prometheus powinien być już automatycznie skonfigurowany jako źródło danych.
 Aby wizualizować metryki, możesz importować gotowe dashboardy z Grafana Labs Dashboards. Popularne ID dla Node Exportera to np. 1860 lub 11074.
